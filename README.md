@@ -48,7 +48,7 @@ To train the model, use the following function:
 nn.train(input, output)
 ```
 
-where ```input`` is the value that you input and ```output``` is the value the computer should output.
+where ```input``` is the value that you input and ```output``` is the value the computer should output.
 
 
 
