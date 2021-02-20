@@ -126,4 +126,5 @@ output_array  |  what the computer should output | Yes
 # Versions
 
 Current Version: 1.1.0
+
 Last Stable Version: 1.1.0
