@@ -121,3 +121,9 @@ Parameters    |   What it is    | Required
 ----------    | --------------- | --------
 input_array   |  the input data | Yes
 output_array  |  what the computer should output | Yes
+
+
+# Versions
+
+Current Version: 1.1.0
+Last Stable Version: 1.1.0
