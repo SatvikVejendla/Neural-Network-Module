@@ -4,7 +4,7 @@ A simple easy to use Node JS module which lets you create your own neural networ
 
 
 
-# Documentation
+# Quick Start
 
 
 ### Set up
@@ -58,7 +58,68 @@ To test the model, use this function:
 
 
 ```
-nn.feedforward(input)
+nn.predict(input)
 ```
 
 This will make the computer use it's previous tested data to make a guess for what the output should be.
+
+You're done creating a basic neural network. For more functionality, take a look at the documentation.
+
+
+
+# Documentation
+
+
+
+
+```nn.getWeights()```
+
+
+Returns all of the current weights of the neural network
+
+
+```nn.getBias()```
+
+Returns all of the current biases of the neural network
+
+
+```nn.getLearningRate()```
+
+Returns the current learning rate of the neural network
+
+
+```nn.setWeights()```
+
+Parameters     | What it is    | Required
+-----------    | ------------- | --------
+weights_array  | Array of weights | Yes
+
+
+```nn.setBias()```
+
+Parameters     | What it is    | Required
+-----------    | --------------- | ---------
+bias_array     | Array of biases | Yes
+
+```nn.setLearningRate()```
+
+Parameters     | What it is    | Required
+-----------    | -------------- | -------
+learning_rate  | New learning rate  | Yes
+
+
+```nn.predict()```
+
+Parameters    |  What it is     | Required
+----------    | --------------- | ---------
+input_array   | Array of input data that matches the number of input_nodes | Yes
+
+```nn.train()```
+
+
+```nn.train()```
+
+Parameters    |   What it is    | Required
+----------    | --------------- | --------
+input_array   |  the input data | Yes
+output_array  |  what the computer should output | Yes
