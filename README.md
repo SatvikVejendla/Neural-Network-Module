@@ -66,6 +66,11 @@ This will make the computer use it's previous tested data to make a guess for wh
 You're done creating a basic neural network. For more functionality, take a look at the documentation.
 
 
+# Examples
+
+- [XOR Example](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/XOR.js)
+- [Sine Graph](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/sinwave.js)
+
 
 # Documentation
 
