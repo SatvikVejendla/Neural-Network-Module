@@ -117,8 +117,6 @@ input_array   | Array of input data that matches the number of input_nodes | Yes
 ```nn.train()```
 
 
-```nn.train()```
-
 Parameters    |   What it is    | Required
 ----------    | --------------- | --------
 input_array   |  the input data | Yes
