@@ -1,6 +1,6 @@
 const NeuralNetwork = require("neural-network-node");
 
-let nn = new NeuralNetwork(2, 4, 1);
+let nn = new NeuralNetwork.Standard(2, 4, 1);
 
 /*
    XOR is when you want one value to be True and another to be False. 

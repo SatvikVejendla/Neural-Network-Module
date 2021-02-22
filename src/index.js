@@ -1,5 +1,5 @@
-const SupervisedLearner = require("../utils/SupervisedLearner");
+const Standard = require("../utils/Standard");
 const Perceptron = require("../utils/Perceptron");
 
-exports.SupervisedLearner = SupervisedLearner;
+exports.Standard = Standard;
 exports.Perceptron = Perceptron;
