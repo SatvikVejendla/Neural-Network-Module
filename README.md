@@ -27,7 +27,7 @@ const NeuralNetwork = require('neural-network-node')
 The function to create a new neural network is just:
 
 ```
-const nn = new NeuralNetwork.SupervisedLearner(input_nodes, hidden_nodes, output_nodes);
+const nn = new NeuralNetwork.Standard(input_nodes, hidden_nodes, output_nodes);
 ```
 
 In this case, you will have to change some of these.
