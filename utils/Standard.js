@@ -1,7 +1,7 @@
 const Matrix = require("./global/Matrix");
 const Sigmoid = require("./global/Sigmoid");
 
-class SupervisedLearner {
+class Standard {
   constructor(input_nodes, hidden_nodes, output_nodes) {
     this.input_nodes = input_nodes;
     this.hidden_nodes = hidden_nodes;
@@ -134,4 +134,4 @@ class SupervisedLearner {
   }
 }
 
-module.exports = SupervisedLearner;
+module.exports = Standard;
