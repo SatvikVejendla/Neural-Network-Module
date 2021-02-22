@@ -2,6 +2,8 @@ const NeuralNetwork = require("neural-network-node");
 
 let nn = new NeuralNetwork(1, 2, 1);
 
+/*approximates the y = sinx function.
+After you train it, you should be able to input an x-value and get a y-value close to the output*/
 function generatedata() {
   let input = Math.random() * 2 * Math.PI;
   let output = Math.sin(input);

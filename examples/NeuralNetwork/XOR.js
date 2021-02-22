@@ -2,6 +2,10 @@ const NeuralNetwork = require("neural-network-node");
 
 let nn = new NeuralNetwork(2, 4, 1);
 
+/*
+   XOR is when you want one value to be True and another to be False. 
+   So, for example, True and False would return True in XOR. 
+   However, True and True would return False.*/
 let training_data = [
   {
     inputs: [0, 0],
