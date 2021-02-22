@@ -25,6 +25,10 @@ let training_data = [
   },
 ];
 
+function random(x) {
+  return x[Math.random() * x.length];
+}
+
 for (let i = 0; i < 1000; i++) {
   let data = random(training_data);
   nn.train(data.inputs, data.outputs);
