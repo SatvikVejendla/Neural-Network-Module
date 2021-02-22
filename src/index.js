@@ -1,3 +1,5 @@
-const NeuralNetwork = require("../utils/NeuralNetwork");
+const SupervisedLearner = require("../utils/SupervisedLearner");
+const Perceptron = require("../utils/Perceptron");
 
-module.exports = NeuralNetwork;
+exports.SupervisedLearner = SupervisedLearner;
+exports.Perceptron = Perceptron;
