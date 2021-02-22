@@ -135,4 +135,5 @@ Current Version: 1.1.1
 Stable Versions:
 
 **1.1.1** - Added Perceptron support
+
 **1.1.0** - First stable version
