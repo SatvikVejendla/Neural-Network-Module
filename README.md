@@ -72,8 +72,8 @@ You're done creating a basic neural network. For more functionality, take a look
 
 # Examples
 
-- [XOR Example](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/XOR.js)
-- [Sine Graph](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/sinwave.js)
+- [XOR Example](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/Standard/XOR.js)
+- [Sine Graph](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/Standard/sinwave.js)
 
 
 # Documentation
