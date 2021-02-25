@@ -21,5 +21,5 @@ for (let i = 0; i < 10000; i++) {
 
 console.log("Finished training");
 
-const output = nn.predict(Math.PI); //The more you train the model, the closer this gets to zero
+const output = nn.predict([Math.PI]); //The more you train the model, the closer this gets to zero
 console.log(output);
