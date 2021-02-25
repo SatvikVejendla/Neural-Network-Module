@@ -134,6 +134,8 @@ Current Version: 1.1.7
 
 Stable Versions:
 
+**1.2.1** - Succesfully added Deep Feed Forward Network. Removed error message for mismatched input data client-side.
+
 **1.1.7** - Failed to add Perceptron support. Forced to remove it temporarily
 
 **1.1.0** - First stable version
