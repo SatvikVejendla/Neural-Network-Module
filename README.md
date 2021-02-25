@@ -1,7 +1,11 @@
 # Neural-Network-Node
 A simple easy to use Node JS module which lets you create your own neural network and train it.
 
+# About
 
+### Types of Neural Networks supported
+- Standard (Feed Forward)
+- DFF (Deep Feed Forward) aka multiple hidden layers module
 
 
 # Quick Start
