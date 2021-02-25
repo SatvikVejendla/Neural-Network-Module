@@ -130,10 +130,10 @@ output_array  |  what the computer should output | Yes
 
 # Versions
 
-Current Version: 1.1.1
+Current Version: 1.1.7
 
 Stable Versions:
 
-**1.1.1** - Added Perceptron support
+**1.1.7** - Failed to add Perceptron support. Forced to remove it temporarily
 
 **1.1.0** - First stable version
