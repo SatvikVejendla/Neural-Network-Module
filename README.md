@@ -206,9 +206,11 @@ output_array  |  what the computer should output | Yes
 
 # Versions
 
-Current Version: 1.1.7
+Current Version: 1.2.9
 
 Stable Versions:
+
+**1.2.9** - Added browser support
 
 **1.2.1** - Succesfully added Deep Feed Forward Network. Removed error message for mismatched input data client-side.
 
