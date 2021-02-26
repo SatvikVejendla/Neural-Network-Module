@@ -1,8 +1,8 @@
 {
   "name": "neural-network-node",
-  "version": "1.2.1",
+  "version": "1.2.9",
   "description": "A simple neural network coded from scratch with no external modules. Lets you train your own neural network in a simple and easy to learn way.",
-  "main": "src/index.js",
+  "main": "src/npm/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

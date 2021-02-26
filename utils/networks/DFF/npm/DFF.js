@@ -1,5 +1,5 @@
-const Matrix = require("./global/Matrix");
-const Sigmoid = require("./global/Sigmoid");
+const Matrix = require("../../../global/npm/Matrix");
+const Sigmoid = require("../../../global/npm/Sigmoid");
 
 class DFF {
   constructor(input_nodes, hidden_nodes, output_nodes) {
