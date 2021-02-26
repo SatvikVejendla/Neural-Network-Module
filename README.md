@@ -91,7 +91,6 @@ You're done creating a basic neural network. For more functionality, take a look
 
 
 
-
 ```nn.getWeights()```
 
 
