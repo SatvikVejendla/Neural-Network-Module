@@ -210,6 +210,8 @@ Current Version: 1.2.9
 
 Stable Versions:
 
+**1.3.0** - Added DFF for browser support
+
 **1.2.9** - Added browser support
 
 **1.2.1** - Succesfully added Deep Feed Forward Network. Removed error message for mismatched input data client-side.
