@@ -34,7 +34,17 @@ const NeuralNetwork = require('neural-network-node')
 
 ### Browser
 
-Coming soon...
+Browser support is finally here!
+
+To get started, create a script such as that follows in order to import the module from static hosting:
+
+```
+<script type="module">
+        import { Standard } from "https://unpkg.com/neural-network-node@1.2.9/src/html/index.js";
+</script>
+```
+
+Once you're done with this, you can access the imported classes at any time in any of the script files. HOWEVER, you have to make sure to import the correct class. Ex: import {Standard}. If you're using DFF, then change this to import {DFF}.
 
 # Quick Start Standard
 
@@ -196,9 +206,11 @@ output_array  |  what the computer should output | Yes
 
 # Versions
 
-Current Version: 1.1.7
+Current Version: 1.2.9
 
 Stable Versions:
+
+**1.2.9** - Added browser support
 
 **1.2.1** - Succesfully added Deep Feed Forward Network. Removed error message for mismatched input data client-side.
 
