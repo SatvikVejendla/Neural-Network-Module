@@ -1,8 +1,8 @@
 # Neural-Network-Node
-A simple easy to use Node JS module which lets you create your own neural network and train it.
+A simple easy to use Node JS module which lets you create your own neural network and train it. This was coded from scratch and has no external module dependencies.
 
 
-- [Background Info](#about)
+- [About](#about)
 - [Installation](#set-up)
 - [Quick Start (Standard)](#quick-start-standard)
 - [Quick Start (DFF)](#quick-start-dff)
