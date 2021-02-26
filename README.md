@@ -95,7 +95,7 @@ You're done creating a basic neural network. For more functionality, take a look
 The function to create a new neural network is just:
 
 ```
-const nn = new NeuralNetwork.Standard(input_nodes, hidden_nodes, output_nodes);
+const nn = new NeuralNetwork.DFF(input_nodes, hidden_nodes, output_nodes);
 ```
 
 In this case, you will have to change some of these.
