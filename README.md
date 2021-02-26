@@ -1,5 +1,15 @@
 # Neural-Network-Node
-A simple easy to use Node JS module which lets you create your own neural network and train it.
+A simple easy to use Node JS module which lets you create your own neural network and train it. This was coded from scratch and has no external module dependencies.
+
+
+- [About](#about)
+- [Installation](#set-up)
+- [Quick Start (Standard)](#quick-start-standard)
+- [Quick Start (DFF)](#quick-start-dff)
+- [Examples](#examples)
+- [Documentation](#documentation)
+- [Versions](#versions)
+
 
 # About
 
@@ -8,11 +18,10 @@ A simple easy to use Node JS module which lets you create your own neural networ
 - DFF (Deep Feed Forward) aka multiple hidden layers module
 
 
-# Quick Start
+# Set up
 
 
-### Set up
-
+### NPM
 Begin by installing the node module with this command:
 
 ```npm install neural-network-node```
@@ -22,6 +31,12 @@ Now that you have it installed, in your main file, add this following code to im
 ```
 const NeuralNetwork = require('neural-network-node')
 ```
+
+### Browser
+
+Coming soon...
+
+# Quick Start Standard
 
 
 
@@ -70,14 +85,61 @@ This will make the computer use it's previous tested data to make a guess for wh
 You're done creating a basic neural network. For more functionality, take a look at the documentation.
 
 
+# Quick Start DFF
+
+
+
+### Creating a neural network
+
+
+The function to create a new neural network is just:
+
+```
+const nn = new NeuralNetwork.DFF(input_nodes, hidden_nodes, output_nodes);
+```
+
+In this case, you will have to change some of these.
+1. replace the ```input_nodes``` with however many inputs you give the network
+2. replace the ```hidden_nodes``` with an array. The first element in the array is the number of hidden nodes for the first hidden layer, the second element is for the second layer, and so on.
+3. replace the ```output_nodes``` with however many outputs you want.
+
+
+Once you're done with this, you have finished creating the neural network. The next step is to train it with data.
+
+
+### Training the model
+
+To train the model, use the following function:
+
+```
+nn.train(input, output)
+```
+
+where ```input``` is the value that you input and ```output``` is the value the computer should output.
+
+
+### Testing the model
+
+To test the model, use this function:
+
+```
+nn.predict(input)
+```
+
+Finished.
+
+
+
 # Examples
 
-- [XOR Example](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/XOR.js)
-- [Sine Graph](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/sinwave.js)
+- Standard
+  - [XOR Example](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/Standard/XOR.js)
+  - [Sine Graph](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/Standard/sinwave.js)
+- DFF
+  - [Sine Graph](https://github.com/SatvikVejendla/Neural-Network-Node/blob/main/examples/DFF/sinwave.js)
 
 
 # Documentation
-
 
 
 
