@@ -3,7 +3,9 @@ A simple easy to use Node JS module which lets you create your own neural networ
 
 
 - [Background Info](#about)
-- [Quick Start](#quick-start)
+- [Installation](#set-up)
+- [Quick Start (Standard)](#quick-start-standard)
+- [Quick Start (DFF)](#quick-start-dff)
 - [Examples](#examples)
 - [Documentation](#documentation)
 - [Versions](#versions)
@@ -18,6 +20,8 @@ A simple easy to use Node JS module which lets you create your own neural networ
 
 # Set up
 
+
+### NPM
 Begin by installing the node module with this command:
 
 ```npm install neural-network-node```
@@ -28,8 +32,11 @@ Now that you have it installed, in your main file, add this following code to im
 const NeuralNetwork = require('neural-network-node')
 ```
 
+### Browser
 
-# Quick Start (Standard)
+Coming soon...
+
+# Quick Start Standard
 
 
 
@@ -78,7 +85,7 @@ This will make the computer use it's previous tested data to make a guess for wh
 You're done creating a basic neural network. For more functionality, take a look at the documentation.
 
 
-# Quick Start (DFF)
+# Quick Start DFF
 
 
 
