@@ -1,6 +1,6 @@
 {
   "name": "neural-network-node",
-  "version": "1.2.9",
+  "version": "1.3.0",
   "description": "A simple neural network coded from scratch with no external modules. Lets you train your own neural network in a simple and easy to learn way.",
   "main": "src/npm/index.js",
   "scripts": {
