@@ -19,24 +19,10 @@ A simple easy to use Node JS, HTML JS, and Java module which lets you create you
 
 # Set up
 
-### Browser
-
-Browser support is finally here!
-
-To get started, create a script such as that follows in order to import the module from static hosting:
-
-```
-<script type="module">
-        import { Standard } from "https://unpkg.com/neural-network-node@1.2.9/src/html/index.js";
-</script>
-```
-
-Once you're done with this, you can access the imported classes at any time in any of the script files. HOWEVER, you have to make sure to import the correct class. Ex: import {Standard}. If you're using DFF, then change this to import {DFF}.
-
-### Java
-
-Coming soon.
-
+- [Browser](https://github.com/SatvikVejendla/Neural-Network-Module/blob/main/src/html/ReadMe.md)
+- [NPM](https://github.com/SatvikVejendla/Neural-Network-Module/blob/main/src/npm/ReadMe.md)
+- [Java](https://github.com/SatvikVejendla/Neural-Network-Module/blob/main/src/java/ReadMe.md)
+- C++ coming soon
 # Quick Start Standard
 
 ### Creating a neural network
