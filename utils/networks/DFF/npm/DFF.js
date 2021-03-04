@@ -155,3 +155,5 @@ class DFF {
     this.biases["bias_ih"].add(hidden_gradient);
   }
 }
+
+module.exports = DFF;
