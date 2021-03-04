@@ -156,11 +156,11 @@ Returns the current learning rate of the neural network
 
 # Versions
 
-Current Version: 1.2.9
+Current Version: 1.3.1
 
 Stable Versions:
 
-**1.3.0** - Added DFF for browser support
+**1.3.1** - Added DFF for browser support
 
 **1.2.9** - Added browser support
 
