@@ -1,6 +1,6 @@
 # Neural-Network-Module
 
-A simple easy to use Node JS, HTML JS, and Java module which lets you create your own neural network and train it. This was coded from scratch and has no external module dependencies.
+A simple easy to use Node JS, HTML JS, and Java module which lets you create your own neural network and train it. This was coded from scratch and uses my [numpy-matrix-js](https://github.com/SatvikVejendla/numpy-matrix-js) module for the Matrix math.
 
 - [About](#about)
 - [Installation](#set-up)
