@@ -156,9 +156,11 @@ Returns the current learning rate of the neural network
 
 # Versions
 
-Current Version: 1.3.1
+Current Version: 1.3.9
 
 Stable Versions:
+
+**1.3.9** - Changed Matrix library to my [numpy-matrix-js](https://github.com/SatvikVejendla/numpy-matrix-js) module for NPM versions only.
 
 **1.3.1** - Added DFF for browser support
 
