@@ -1,7 +1,12 @@
-import Matrix from "../../../global/html/Matrix.js";
-import Sigmoid from "../../../global/html/Sigmoid.js";
+function sigmoid(x) {
+  return 1 / (1 + Math.exp(-x));
+}
 
-export default class Standard {
+function dsigmoid(y) {
+  return y * (1 - y);
+}
+
+class Standard {
   constructor(input_nodes, hidden_nodes, output_nodes) {
     this.input_nodes = input_nodes;
     this.hidden_nodes = hidden_nodes;
@@ -60,12 +65,12 @@ export default class Standard {
     hidden.add(this.bias_h);
 
     //activation
-    hidden.map(Sigmoid.sigmoid);
+    hidden.map(sigmoid);
 
     //hidden to output
     let output = Matrix.multiply(this.weights_ho, hidden);
     output.add(this.bias_o);
-    output.map(Sigmoid.sigmoid);
+    output.map(sigmoid);
 
     //converting matrix to array and return
     return output.toArray();
@@ -79,17 +84,17 @@ export default class Standard {
     hidden.add(this.bias_h);
 
     //activation
-    hidden.map(Sigmoid.sigmoid);
+    hidden.map(sigmoid);
 
     //hidden to output
     let outputs = Matrix.multiply(this.weights_ho, hidden);
     outputs.add(this.bias_o);
-    outputs.map(Sigmoid.sigmoid);
+    outputs.map(sigmoid);
 
     let targets = Matrix.fromArray(target_array);
     //error calculation
     let output_errors = Matrix.subtract(targets, outputs);
-    let gradients = Matrix.map(outputs, Sigmoid.dsigmoid);
+    let gradients = Matrix.map(outputs, dsigmoid);
     gradients.multiply(output_errors);
     gradients.multiply(this.learning_rate);
 
@@ -103,7 +108,7 @@ export default class Standard {
     //hidden layer errors
     let who_t = Matrix.transpose(this.weights_ho);
     let hidden_errors = Matrix.multiply(who_t, output_errors);
-    let hidden_gradient = Matrix.map(hidden, Sigmoid.dsigmoid);
+    let hidden_gradient = Matrix.map(hidden, dsigmoid);
     hidden_gradient.multiply(hidden_errors);
     hidden_gradient.multiply(this.learning_rate);
 

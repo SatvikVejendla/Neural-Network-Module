@@ -1,13 +1,14 @@
 class Matrix {
-  constructor(rows, cols) {
+  constructor(rows, cols, data) {
     this.rows = rows;
     this.cols = cols;
-    this.data = [];
-
-    for (let i = 0; i < this.rows; i++) {
-      this.data[i] = [];
-      for (let j = 0; j < this.cols; j++) {
-        this.data[i][j] = 0;
+    this.data = data || [];
+    if (this.data == []) {
+      for (let i = 0; i < this.rows; i++) {
+        this.data[i] = [];
+        for (let j = 0; j < this.cols; j++) {
+          this.data[i][j] = 0;
+        }
       }
     }
   }
@@ -128,5 +129,3 @@ class Matrix {
     console.table(this.data);
   }
 }
-
-export default Matrix;

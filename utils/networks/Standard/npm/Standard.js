@@ -1,4 +1,4 @@
-const Matrix = require("../../../global/npm/Matrix");
+const np = require("numpy-matrix-js");
 const Sigmoid = require("../../../global/npm/Sigmoid");
 
 class Standard {
@@ -7,15 +7,12 @@ class Standard {
     this.hidden_nodes = hidden_nodes;
     this.output_nodes = output_nodes;
 
-    this.weights_ih = new Matrix(this.hidden_nodes, this.input_nodes);
-    this.weights_ho = new Matrix(this.output_nodes, this.hidden_nodes);
-    this.weights_ih.randomize();
-    this.weights_ho.randomize();
+    this.weights_ih = np.random.rand(this.hidden_nodes, this.input_nodes);
+    this.weights_ho = np.random.rand(this.output_nodes, this.hidden_nodes);
 
-    this.bias_h = new Matrix(this.hidden_nodes, 1);
-    this.bias_o = new Matrix(this.output_nodes, 1);
-    this.bias_h.randomize();
-    this.bias_o.randomize();
+    this.bias_h = np.random.rand(this.hidden_nodes, 1);
+    this.bias_o = np.random.rand(this.output_nodes, 1);
+
     this.learning_rate = 0.1;
   }
 
@@ -53,65 +50,74 @@ class Standard {
   }
 
   predict(input_array) {
-    let inputs = Matrix.fromArray(input_array);
-
+    let inputs = np.zeros(input_array.length, 1);
+    for (let i = 0; i < input_array.length; i++) {
+      inputs[i][0] = input_array[i];
+    }
     //input to hidden
-    let hidden = Matrix.multiply(this.weights_ih, inputs);
-    hidden.add(this.bias_h);
+    let hidden = np.matmul(this.weights_ih, inputs);
+    hidden = np.add(hidden, this.bias_h);
 
     //activation
     hidden.map(Sigmoid.sigmoid);
 
     //hidden to output
-    let output = Matrix.multiply(this.weights_ho, hidden);
-    output.add(this.bias_o);
+    let output = np.matmul(this.weights_ho, hidden);
+    output = np.add(output, this.bias_o);
     output.map(Sigmoid.sigmoid);
 
     //converting matrix to array and return
-    return output.toArray();
+    return output;
   }
 
   train(input_array, target_array) {
-    let inputs = Matrix.fromArray(input_array);
-
+    let inputs = np.zeros(input_array.length, 1);
+    for (let i = 0; i < input_array.length; i++) {
+      inputs[i][0] = input_array[i];
+    }
     //input to hidden
-    let hidden = Matrix.multiply(this.weights_ih, inputs);
-    hidden.add(this.bias_h);
+    let hidden = np.matmul(this.weights_ih, inputs);
+    hidden = np.add(hidden, this.bias_h);
 
     //activation
     hidden.map(Sigmoid.sigmoid);
 
     //hidden to output
-    let outputs = Matrix.multiply(this.weights_ho, hidden);
-    outputs.add(this.bias_o);
+    let outputs = np.matmul(this.weights_ho, hidden);
+    outputs = np.add(outputs, this.bias_o);
     outputs.map(Sigmoid.sigmoid);
 
-    let targets = Matrix.fromArray(target_array);
+    let targets = np.zeros(target_array.length, 1);
+    for (let i = 0; i < target_array.length; i++) {
+      targets[i][0] = target_array[i];
+    }
     //error calculation
-    let output_errors = Matrix.subtract(targets, outputs);
-    let gradients = Matrix.map(outputs, Sigmoid.dsigmoid);
-    gradients.multiply(output_errors);
+    let output_errors = np.subtract(targets, outputs);
+    let gradients = outputs;
+    gradients.map(Sigmoid.dsigmoid);
+    gradients = np.matmul(gradients, output_errors);
     gradients.multiply(this.learning_rate);
 
-    let hidden_T = Matrix.transpose(hidden);
-    let weight_ho_deltas = Matrix.multiply(gradients, hidden_T);
+    let hidden_T = np.transpose(hidden);
+    let weight_ho_deltas = np.matmul(gradients, hidden_T);
 
     //Weights and Biases adjustments
-    this.weights_ho.add(weight_ho_deltas);
-    this.bias_o.add(gradients);
+    this.weights_ho = np.add(this.weights_ho, weight_ho_deltas);
+    this.bias_o = np.add(this.bias_o, gradients);
 
     //hidden layer errors
-    let who_t = Matrix.transpose(this.weights_ho);
-    let hidden_errors = Matrix.multiply(who_t, output_errors);
-    let hidden_gradient = Matrix.map(hidden, Sigmoid.dsigmoid);
-    hidden_gradient.multiply(hidden_errors);
+    let who_t = np.transpose(this.weights_ho);
+    let hidden_errors = np.matmul(who_t, output_errors);
+    let hidden_gradient = hidden;
+    hidden_gradient.map(Sigmoid.dsigmoid);
+    hidden_gradient = np.matmul(hidden_gradient, hidden_errors);
     hidden_gradient.multiply(this.learning_rate);
 
-    let inputs_T = Matrix.transpose(inputs);
-    let weight_ih_deltas = Matrix.multiply(hidden_gradient, inputs_T);
+    let inputs_T = np.transpose(inputs);
+    let weight_ih_deltas = np.matmul(hidden_gradient, inputs_T);
 
-    this.weights_ih.add(weight_ih_deltas);
-    this.bias_h.add(hidden_gradient);
+    this.weights_ih = np.add(this.weights_ih, weight_ih_deltas);
+    this.bias_h = np.add(this.bias_h, hidden_gradient);
   }
 }
 

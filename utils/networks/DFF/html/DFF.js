@@ -1,7 +1,12 @@
-import Matrix from "../../../global/html/Matrix.js";
-import Sigmoid from "../../../global/html/Sigmoid.js";
+function sigmoid(x) {
+  return 1 / (1 + Math.exp(-x));
+}
 
-export default class DFF {
+function dsigmoid(y) {
+  return y * (1 - y);
+}
+
+class DFF {
   constructor(input_nodes, hidden_nodes, output_nodes) {
     this.input_nodes = input_nodes;
     this.hidden_nodes = hidden_nodes;
@@ -44,11 +49,45 @@ export default class DFF {
 
     this.learning_rate = 0.1;
   }
-  getWeights() {
-    return this.weights;
+
+  getState() {
+    return {
+      layers: {
+        input_nodes: this.input_nodes,
+        hidden_nodes: this.hidden_nodes,
+        output_nodes: this.output_nodes,
+      },
+      weights: this.weights,
+      biases: this.biases,
+      learning_rate: this.learning_rate,
+    };
   }
-  getBias() {
-    return this.biases;
+
+  setState(json) {
+    this.input_nodes = json.layers.input_nodes;
+    this.hidden_nodes = json.layers.hidden_nodes;
+    this.output_nodes = json.layers.output_nodes;
+    this.weights = {
+      weights_ih: new Matrix(this.hidden_nodes[0], this.input_nodes),
+    };
+    for (let i = 0; i < this.hidden_nodes.length; i++) {
+      if (i == this.hidden_nodes.length - 1) {
+        this.weights["weights_ho"] = new Matrix(
+          this.output_nodes,
+          this.hidden_nodes[i]
+        );
+        this.weights["weights_ho"].data = json.weights["weights_ho"].data;
+      } else if (i >= 0) {
+        this.weights["weights_h" + i] = new Matrix(
+          this.hidden_nodes[i + 1],
+          this.hidden_nodes[i]
+        );
+        this.weights["weights_h" + i].data = json.weights["weights_h" + i].data;
+      }
+    }
+    this.weights = json.weights;
+    this.biases = json.biases;
+    this.learning_rate = json.learning_rate;
   }
 
   predict(input_array) {
@@ -58,19 +97,19 @@ export default class DFF {
     hidden.add(this.biases["bias_ih"]);
 
     //activation
-    hidden.map(Sigmoid.sigmoid);
+    hidden.map(sigmoid);
 
     let tempoutput = hidden;
     for (let i = 0; i < Object.keys(this.weights).length - 2; i++) {
       tempoutput = Matrix.multiply(this.weights["weights_h" + i], tempoutput);
       tempoutput.add(this.biases["bias_h" + i]);
-      tempoutput.map(Sigmoid.sigmoid);
+      tempoutput.map(sigmoid);
     }
 
     //hidden to output
     let output = Matrix.multiply(this.weights["weights_ho"], tempoutput);
     output.add(this.biases["bias_ho"]);
-    output.map(Sigmoid.sigmoid);
+    output.map(sigmoid);
 
     //converting matrix to array and return
     return output.toArray();
@@ -84,25 +123,25 @@ export default class DFF {
     //guess
     let hidden = Matrix.multiply(this.weights["weights_ih"], inputs);
     hidden.add(this.biases["bias_ih"]);
-    hidden.map(Sigmoid.sigmoid);
+    hidden.map(sigmoid);
     values["ih"] = hidden;
 
     let tempoutput = hidden;
     for (let i = 0; i < Object.keys(this.weights).length - 2; i++) {
       tempoutput = Matrix.multiply(this.weights["weights_h" + i], tempoutput);
       tempoutput.add(this.biases["bias_h" + i]);
-      tempoutput.map(Sigmoid.sigmoid);
+      tempoutput.map(sigmoid);
       values["h" + i] = tempoutput;
     }
 
     let output = Matrix.multiply(this.weights["weights_ho"], tempoutput);
     output.add(this.biases["bias_ho"]);
-    output.map(Sigmoid.sigmoid);
+    output.map(sigmoid);
     values["ho"] = output;
 
     //error calculation
     let output_errors = Matrix.subtract(targets, output);
-    let gradients = Matrix.map(output, Sigmoid.dsigmoid);
+    let gradients = Matrix.map(output, dsigmoid);
     gradients.multiply(output_errors);
     gradients.multiply(this.learning_rate);
     let hidden_T = Matrix.transpose(hidden);
@@ -121,10 +160,7 @@ export default class DFF {
       let temp_hidden_errors = Matrix.multiply(temp_who_t, last_error);
       last_error = temp_hidden_errors;
 
-      let temp_hidden_gradient = Matrix.map(
-        values["h" + (i - 1)],
-        Sigmoid.dsigmoid
-      );
+      let temp_hidden_gradient = Matrix.map(values["h" + (i - 1)], dsigmoid);
       temp_hidden_gradient.multiply(temp_hidden_errors);
       temp_hidden_gradient.multiply(this.learning_rate);
       let temp_inputs_T;
@@ -146,7 +182,7 @@ export default class DFF {
 
     let who_t = Matrix.transpose(this.weights["weights_h0"]);
     let hidden_errors = Matrix.multiply(who_t, last_error);
-    let hidden_gradient = Matrix.map(hidden, Sigmoid.dsigmoid);
+    let hidden_gradient = Matrix.map(hidden, dsigmoid);
     hidden_gradient.multiply(hidden_errors);
     hidden_gradient.multiply(this.learning_rate);
     let inputs_T = Matrix.transpose(inputs);
