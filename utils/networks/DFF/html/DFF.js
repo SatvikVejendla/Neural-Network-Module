@@ -1,23 +1,23 @@
-function sigmoid(x) {
-  return 1 / (1 + Math.exp(-x));
-}
+import np from "https://unpkg.com/numpy-matrix-js@1.1.4/src/html/index.js";
 
-function dsigmoid(y) {
-  return y * (1 - y);
-}
+let defaultConfig = {
+  learning_rate: 0.1,
+  activation: "sigmoid",
+};
 
 class DFF {
-  constructor(input_nodes, hidden_nodes, output_nodes) {
-    this.input_nodes = input_nodes;
-    this.hidden_nodes = hidden_nodes;
-    this.output_nodes = output_nodes;
+  constructor(nodes, config = defaultConfig) {
+    this.input_nodes = nodes[0];
+    this.hidden_nodes = nodes.splice(1, nodes.length - 1);
+    let hidden_nodes = this.hidden_nodes;
+    this.output_nodes = nodes[nodes.length - 1];
 
     this.weights = {
-      weights_ih: new Matrix(this.hidden_nodes[0], this.input_nodes),
+      weights_ih: np.random.rand(this.hidden_nodes[0], this.input_nodes),
     };
     for (let i = 0; i < hidden_nodes.length; i++) {
       if (i == hidden_nodes.length - 1) {
-        this.weights["weights_ho"] = new Matrix(
+        this.weights["weights_ho"] = np.random.rand(
           this.output_nodes,
           this.hidden_nodes[i]
         );
@@ -28,26 +28,42 @@ class DFF {
         );
       }
     }
-    for (let i in this.weights) {
-      this.weights[i].randomize();
-    }
 
     this.biases = {
-      bias_ih: new Matrix(this.hidden_nodes[0], 1),
+      bias_ih: np.random.rand(this.hidden_nodes[0], 1),
     };
 
     for (let i = 0; i < hidden_nodes.length; i++) {
       if (i == hidden_nodes.length - 1) {
-        this.biases["bias_ho"] = new Matrix(this.output_nodes, 1);
+        this.biases["bias_ho"] = np.random.rand(this.output_nodes, 1);
       } else {
-        this.biases["bias_h" + i] = new Matrix(this.hidden_nodes[i + 1], 1);
+        this.biases["bias_h" + i] = np.random.rand(this.hidden_nodes[i + 1], 1);
       }
     }
-    for (let i in this.biases) {
-      this.biases[i].randomize();
-    }
 
-    this.learning_rate = 0.1;
+    this.learning_rate = config.learning_rate;
+
+    if (config.activation.toLowerCase() == "sigmoid") {
+      this.activation = {
+        function: np.sigmoid,
+        dfunction: np.dsigmoid,
+      };
+    } else if (config.activation.toLowerCase() == "tanh") {
+      this.activation = {
+        function: np.tanh,
+        dfunction: np.dtanh,
+      };
+    } else if (config.activation.toLowerCase() == "relu") {
+      this.activation = {
+        function: np.relu,
+        dfunction: np.heaviside,
+      };
+    } else if (config.activation.toLowerCase() == "leakyrelu") {
+      this.activation = {
+        function: np.leakyrelu,
+        dfunction: np.dleakyrelu,
+      };
+    }
   }
 
   getState() {
@@ -97,19 +113,19 @@ class DFF {
     hidden.add(this.biases["bias_ih"]);
 
     //activation
-    hidden.map(sigmoid);
+    hidden.map(this.activation.function);
 
     let tempoutput = hidden;
     for (let i = 0; i < Object.keys(this.weights).length - 2; i++) {
       tempoutput = Matrix.multiply(this.weights["weights_h" + i], tempoutput);
       tempoutput.add(this.biases["bias_h" + i]);
-      tempoutput.map(sigmoid);
+      tempoutput.map(this.activation.function);
     }
 
     //hidden to output
     let output = Matrix.multiply(this.weights["weights_ho"], tempoutput);
     output.add(this.biases["bias_ho"]);
-    output.map(sigmoid);
+    output.map(this.activation.function);
 
     //converting matrix to array and return
     return output.toArray();
@@ -123,25 +139,25 @@ class DFF {
     //guess
     let hidden = Matrix.multiply(this.weights["weights_ih"], inputs);
     hidden.add(this.biases["bias_ih"]);
-    hidden.map(sigmoid);
+    hidden.map(this.activation.function);
     values["ih"] = hidden;
 
     let tempoutput = hidden;
     for (let i = 0; i < Object.keys(this.weights).length - 2; i++) {
       tempoutput = Matrix.multiply(this.weights["weights_h" + i], tempoutput);
       tempoutput.add(this.biases["bias_h" + i]);
-      tempoutput.map(sigmoid);
+      tempoutput.map(this.activation.function);
       values["h" + i] = tempoutput;
     }
 
     let output = Matrix.multiply(this.weights["weights_ho"], tempoutput);
     output.add(this.biases["bias_ho"]);
-    output.map(sigmoid);
+    output.map(this.activation.function);
     values["ho"] = output;
 
     //error calculation
     let output_errors = Matrix.subtract(targets, output);
-    let gradients = Matrix.map(output, dsigmoid);
+    let gradients = Matrix.map(output, this.activation.dfunction);
     gradients.multiply(output_errors);
     gradients.multiply(this.learning_rate);
     let hidden_T = Matrix.transpose(hidden);
@@ -160,7 +176,10 @@ class DFF {
       let temp_hidden_errors = Matrix.multiply(temp_who_t, last_error);
       last_error = temp_hidden_errors;
 
-      let temp_hidden_gradient = Matrix.map(values["h" + (i - 1)], dsigmoid);
+      let temp_hidden_gradient = Matrix.map(
+        values["h" + (i - 1)],
+        this.activation.dfunction
+      );
       temp_hidden_gradient.multiply(temp_hidden_errors);
       temp_hidden_gradient.multiply(this.learning_rate);
       let temp_inputs_T;
@@ -182,7 +201,7 @@ class DFF {
 
     let who_t = Matrix.transpose(this.weights["weights_h0"]);
     let hidden_errors = Matrix.multiply(who_t, last_error);
-    let hidden_gradient = Matrix.map(hidden, dsigmoid);
+    let hidden_gradient = Matrix.map(hidden, this.activation.dfunction);
     hidden_gradient.multiply(hidden_errors);
     hidden_gradient.multiply(this.learning_rate);
     let inputs_T = Matrix.transpose(inputs);

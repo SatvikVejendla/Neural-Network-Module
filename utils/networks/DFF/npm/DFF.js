@@ -1,11 +1,16 @@
 const np = require("numpy-matrix-js");
-const Sigmoid = require("../../../global/npm/Sigmoid");
+
+let defaultConfig = {
+  learning_rate: 0.1,
+  activation: "sigmoid",
+};
 
 class DFF {
-  constructor(input_nodes, hidden_nodes, output_nodes) {
-    this.input_nodes = input_nodes;
-    this.hidden_nodes = hidden_nodes;
-    this.output_nodes = output_nodes;
+  constructor(nodes, config = defaultConfig) {
+    this.input_nodes = nodes[0];
+    this.hidden_nodes = nodes.splice(1, nodes.length - 2);
+    let hidden_nodes = this.hidden_nodes;
+    this.output_nodes = nodes[nodes.length - 1];
 
     this.weights = {
       weights_ih: np.random.rand(this.hidden_nodes[0], this.input_nodes),
@@ -36,7 +41,29 @@ class DFF {
       }
     }
 
-    this.learning_rate = 0.1;
+    this.learning_rate = config.learning_rate;
+
+    if (config.activation.toLowerCase() == "sigmoid") {
+      this.activation = {
+        function: np.sigmoid,
+        dfunction: np.dsigmoid,
+      };
+    } else if (config.activation.toLowerCase() == "tanh") {
+      this.activation = {
+        function: np.tanh,
+        dfunction: np.dtanh,
+      };
+    } else if (config.activation.toLowerCase() == "relu") {
+      this.activation = {
+        function: np.relu,
+        dfunction: np.heaviside,
+      };
+    } else if (config.activation.toLowerCase() == "leakyrelu") {
+      this.activation = {
+        function: np.leakyrelu,
+        dfunction: np.dleakyrelu,
+      };
+    }
   }
 
   getState() {
@@ -62,19 +89,19 @@ class DFF {
 
     hidden = np.add(hidden, this.biases["bias_ih"]);
     //activation
-    hidden.map(Sigmoid.sigmoid);
+    hidden.map(this.activation.function);
 
     let tempoutput = hidden;
     for (let i = 0; i < Object.keys(this.weights).length - 2; i++) {
       tempoutput = np.matmul(this.weights["weights_h" + i], tempoutput);
       tempoutput = np.add(tempoutput, this.biases["bias_h" + i]);
-      tempoutput.map(Sigmoid.sigmoid);
+      tempoutput.map(this.activation.function);
     }
 
     //hidden to output
     let output = np.matmul(this.weights["weights_ho"], tempoutput);
     output = np.add(output, this.biases["bias_ho"]);
-    output.map(Sigmoid.sigmoid);
+    output.map(this.activation.function);
 
     //converting matrix to array and return
     return output;
@@ -94,27 +121,29 @@ class DFF {
     //guess
     let hidden = np.matmul(this.weights["weights_ih"], inputs);
     hidden = np.add(hidden, this.biases["bias_ih"]);
-    hidden.map(Sigmoid.sigmoid);
+    hidden.map(this.activation.function);
     values["ih"] = hidden;
 
     let tempoutput = hidden;
     for (let i = 0; i < Object.keys(this.weights).length - 2; i++) {
       tempoutput = np.matmul(this.weights["weights_h" + i], tempoutput);
       tempoutput = np.add(tempoutput, this.biases["bias_h" + i]);
-      tempoutput.map(Sigmoid.sigmoid);
+      tempoutput.map(this.activation.function);
       values["h" + i] = tempoutput;
     }
+    console.log(tempoutput);
 
     let output = np.matmul(this.weights["weights_ho"], tempoutput);
     output = np.add(output, this.biases["bias_ho"]);
-    output.map(Sigmoid.sigmoid);
+    output.map(this.activation.function);
     values["ho"] = output;
 
     //error calculation
     let output_errors = np.subtract(targets, output);
     let gradients = output;
-    gradients.map(Sigmoid.dsigmoid);
+    gradients.map(this.activation.dfunction);
     gradients.multiply(output_errors);
+
     gradients.multiply(this.learning_rate);
     let hidden_T = np.transpose(hidden);
     let weight_ho_deltas = np.matmul(gradients, hidden_T);
@@ -135,7 +164,7 @@ class DFF {
       let temp_hidden_errors = np.matmul(temp_who_t, last_error);
       last_error = temp_hidden_errors;
       let temp_hidden_gradient = values["h" + (i - 1)];
-      temp_hidden_gradient.map(Sigmoid.dsigmoid);
+      temp_hidden_gradient.map(this.activation.dfunction);
       temp_hidden_gradient.multiply(temp_hidden_errors);
       temp_hidden_gradient.multiply(this.learning_rate);
       let temp_inputs_T;
@@ -164,7 +193,8 @@ class DFF {
     let who_t = np.transpose(this.weights["weights_h0"]);
     let hidden_errors = np.matmul(who_t, last_error);
     let hidden_gradient = hidden;
-    hidden_gradient.map(Sigmoid.dsigmoid);
+    hidden_gradient.map(this.activation.dfunction);
+
     hidden_gradient.multiply(hidden_errors);
     hidden_gradient.multiply(this.learning_rate);
     let inputs_T = np.transpose(inputs);
