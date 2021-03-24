@@ -11,4 +11,4 @@ for (let i = 0; i < 2; i++) {
   nn.train([0, 1], [0]);
   nn.train([1, 0], [0]);
 }
-console.log(nn.predict([0, 1]));
+console.log(nn.predict([0, 0]));

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+		<script src="https://unpkg.com/numpy-matrix-js@1.1.5/src/html/np.min.js"></script>
+		<script src="./utils/networks/Standard/html/Standard.js"></script>
+		<style>
+			body {
+				font-size:40px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="container"></div>
+		
+		<button id="clear">Clear</button>
+		<button id="save">Save State</button>
+		<p id="info">
+			Accuracy: <span id="percent"></span>
+		</p>
+		<p id="predict"></p>
+        <script>
+            let nn = new Standard([3,2,1]);
+
+        </script>
+	</body>
+</html>

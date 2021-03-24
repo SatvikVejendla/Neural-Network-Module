@@ -1,5 +1,3 @@
-import np from "https://unpkg.com/numpy-matrix-js@1.1.4/src/html/index.js";
-
 let defaultConfig = {
   learning_rate: 0.1,
   activation: "sigmoid",

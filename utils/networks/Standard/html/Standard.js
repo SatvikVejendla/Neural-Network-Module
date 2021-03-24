@@ -1,5 +1,3 @@
-import np from "https://unpkg.com/numpy-matrix-js@1.1.4/src/html/index.js";
-
 let defaultConfig = {
   learning_rate: 0.1,
   activation: "sigmoid",
@@ -14,7 +12,7 @@ class Standard {
     } else {
       this.input_nodes = nodes[0];
       this.hidden_nodes = 64;
-      this.output_nodes = node[1];
+      this.output_nodes = nodes[1];
     }
 
     this.weights_ih = np.random.rand(this.hidden_nodes, this.input_nodes);
@@ -157,5 +155,3 @@ class Standard {
     this.bias_h = np.add(this.bias_h, hidden_gradient);
   }
 }
-
-export default Standard;
